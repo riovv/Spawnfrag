@@ -45,6 +45,11 @@ $(function() {
     template: _.template($('#server-item-template').html()),
     levelshot_template: _.template('<img src="{{ src }}" class="img-polaroid img-levelshot"/>'),
 
+    events: {
+      'mouseenter': 'showButtons',
+      'mouseleave': 'hideButtons'
+    },
+
     initialize: function () {
       _.bindAll(this, 'render');
     },
@@ -58,6 +63,7 @@ $(function() {
       // Render the whole view
       this.$el.html(this.template({
         hostname: this.model.get('hostname'),
+        id: this.model.get('id'),
         clients_status: this.model.get('clients_status'),
         clients: this.model.get('clients'),
         maxclients: this.model.get('maxclients'),
@@ -66,6 +72,13 @@ $(function() {
 
       return this;
     },
+
+    showButtons: function () {
+      this.$el.find('.img-block-buttons').fadeIn(200);
+    },
+    hideButtons: function () {
+      this.$el.find('.img-block-buttons').fadeOut(0);
+    }
   });
 
   /**

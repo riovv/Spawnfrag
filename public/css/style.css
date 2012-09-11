@@ -168,6 +168,7 @@ body {
 
 #server-list .img-levelshot {
   width: 248px;
+  height: 186px;
 }
 
 #server-list span.clients {
@@ -182,3 +183,19 @@ body {
 #server-list .img-block-client-status-empty span.clients { background-color: rgba(220, 220, 220, 0.4); }
 #server-list .img-block-client-status-full span.clients { background-color: rgba(200, 0, 0, 0.4); }
 #server-list .img-block-client-status-open span.clients { background-color: rgba(0, 200, 0, 0.4); }
+
+#btn-join {
+  display: inline;
+  position: absolute;
+  width: 158px;
+  top: 50px;
+  left: 50px;
+}
+
+#btn-watch {
+  display: inline;
+  position: absolute;
+  width: 158px;
+  top: 93px;
+  left: 50px;
+}

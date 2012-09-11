@@ -6,17 +6,17 @@
   },
   "troopers.fi:28001": {
     "hostname": "Troopers #1",
-    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=5",
     "location": "fi"
   },
-  "qw.playground.ru:27502": {
-    "hostname": "Playground #2",
-    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
-    "location": "fi"
+  "qw.playground.ru:27501": {
+    "hostname": "Playground #1",
+    "qtv": "http://butt.se:30000/watch.qtv?sid=5",
+    "location": "ru"
   },
   "qw.foppa.dk:27501": {
     "hostname": "Foppa #1",
-    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=21",
     "location": "dk"    
   }
 }
