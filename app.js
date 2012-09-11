@@ -33,6 +33,8 @@ app.configure('development', function () {
  */
 app.get('/', routes.index);
 app.get(/\/server[s]{0,1}$/, routes.servers);
+app.get('/status', routes.status);
+app.get('/status/:host', routes.status_host);
 
 /**
  * Start http server.

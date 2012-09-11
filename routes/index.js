@@ -13,9 +13,27 @@ exports.index = function (req, res) {
  * A server list of all servers from server config.
  */
 exports.servers = function (req, res) {
+  res.render('servers', { title: helpers.pkg.name });
+};
+
+/**
+ * GET "/status"
+ * Get server statuses for all servers in server config as JSON.
+ */
+exports.status = function (req, res) {
   helpers.qw.statusesAll(function (data) {
-    res.send(data);
+    res.json(data);
   });
-  
-  //res.render('servers', { title: helpers.pkg.name });
+};
+
+/**
+ * GET "/status/:host"
+ * Get server statuse for a single server as JSON.
+ */
+exports.status_host = function (req, res) {
+  var host = unescape(req.params.host);
+  helpers.qw.status(host, function (err, data) {
+    if (err) res.json({ id: host, err: err})
+    res.json(data);
+  });
 };
