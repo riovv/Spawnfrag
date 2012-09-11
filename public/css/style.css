@@ -181,4 +181,4 @@ body {
 }
 #server-list .img-block-client-status-empty span.clients { background-color: rgba(220, 220, 220, 0.4); }
 #server-list .img-block-client-status-full span.clients { background-color: rgba(200, 0, 0, 0.4); }
-#server-list .img-block-client-status-open span.clients.open { background-color: rgba(0, 200, 0, 0.4); }
+#server-list .img-block-client-status-open span.clients { background-color: rgba(0, 200, 0, 0.4); }
