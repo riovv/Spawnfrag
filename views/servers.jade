@@ -8,7 +8,8 @@ block content
         div(class='img-block-buttons', style='display: none')
           a(href='qw://{{ id }}')
             button(id='btn-join', class='btn btn-large btn-success') Play now!
-          button(id='btn-watch', class='btn btn-large') Watch QTV
+          a(href='{{ qtv }}')
+            button(id='btn-watch', class='btn btn-large') Watch QTV
         span(class='clients') {{ clients }} / {{ maxclients }}
         {{ levelshot }}
 

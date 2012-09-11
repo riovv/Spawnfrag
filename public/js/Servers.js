@@ -64,6 +64,7 @@ $(function() {
       this.$el.html(this.template({
         hostname: this.model.get('hostname'),
         id: this.model.get('id'),
+        qtv: this.model.get('qtv'),
         clients_status: this.model.get('clients_status'),
         clients: this.model.get('clients'),
         maxclients: this.model.get('maxclients'),
