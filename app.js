@@ -1,16 +1,16 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
-    routes = require('./routes'),
     http = require('http'),
     path = require('path'),
-    // Config
-    server_config = require('./servers.json');
+    routes = require('./routes');
 
 var app = express();
 
+/**
+ * Configure express app.
+ */
 app.configure(function () {
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -27,8 +27,16 @@ app.configure('development', function () {
   app.use(express.errorHandler());
 });
 
+/**
+ * Routes
+ * Callback functions are defined in routes/index.js
+ */
 app.get('/', routes.index);
+app.get(/\/server[s]{0,1}$/, routes.servers);
 
+/**
+ * Start http server.
+ */
 http.createServer(app).listen(app.get('port'), function () {
   console.log("Spawnfrag server listening on port " + app.get('port'));
 });

@@ -1,16 +1,21 @@
 {
+  "pangela.se:28002" : {
+    "hostname": "Pangela #2",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
+    "location": "se"
+  },
   "troopers.fi:28001": {
-    "title": "Troopers #1",
+    "hostname": "Troopers #1",
     "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
     "location": "fi"
   },
   "qw.playground.ru:27502": {
-    "title": "Playground #2",
+    "hostname": "Playground #2",
     "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
     "location": "fi"
   },
   "qw.foppa.dk:27501": {
-    "title": "Foppa #1",
+    "hostname": "Foppa #1",
     "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
     "location": "dk"    
   }
