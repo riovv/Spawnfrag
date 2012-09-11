@@ -10,16 +10,19 @@
  */
 
 /* ==========================================================================
-   Bootstrap overrides
+   Bootstrap: overrides
    ========================================================================== */
 
 body {
   /* Need to have at least 40px padding-top, because of the fixed-top navbar */
-  padding: 40px 0 0 0;
+  padding: 60px 0 0 0;
+  /* Use nice font and color for the whole page */
+  color: #555;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* ==========================================================================
-   Bootstrap Scaffolding override, 1200px wide instead of 960px
+   Bootstrap: Scaffolding override, 1200px wide instead of 960px
    ========================================================================== */
 .container,
 .navbar-static-top .container,
@@ -125,5 +128,42 @@ body {
 }
 
 /* ==========================================================================
-   Spawnfrag styles
+   Spawnfrag: Server styles
    ========================================================================== */
+#server-list .server-item-inner {
+  min-height: 40px;
+  padding: 10px;
+  border: 1px solid #d4d4d4;
+  background-color: #e5e5e5;
+  background-repeat: repeat-x;
+
+  background-image: -moz-linear-gradient(top, #eaeaea, #e5e5e5);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eaeaea), to(#e5e5e5));
+  background-image: -webkit-linear-gradient(top, #eaeaea, #e5e5e5);
+  background-image: -o-linear-gradient(top, #eaeaea, #e5e5e5);
+  background-image: linear-gradient(to bottom, #eaeaea, #e5e5e5);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffeaeaea', endColorstr='#ffe5e5e5', GradientType=0);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+#server-list .server-item-inner h2 {
+  margin: 0 0 10px 0;
+  padding: 0 2px;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: normal;
+}
+
+#server-list .img-levelshot-holder {
+  width: 258px;
+  height: 196px;
+}
+
+#server-list .img-levelshot {
+  width: 248px;
+}
