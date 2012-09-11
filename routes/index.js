@@ -5,7 +5,8 @@ var helpers = require('../helpers.js'),
  * The home page.
  */
 exports.index = function (req, res) {
-  res.render('index', { title: helpers.pkg.name });
+  res.redirect('/servers')
+  //res.render('index', { title: helpers.pkg.name });
 };
 
 /**
