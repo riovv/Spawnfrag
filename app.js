@@ -32,7 +32,7 @@ app.configure('development', function () {
  * Callback functions are defined in routes/index.js
  */
 app.get('/', routes.index);
-app.get(/\/server[s]{0,1}$/, routes.servers);
+app.get(/\/servers?$/, routes.servers);
 app.get('/status', routes.status);
 app.get('/status/:host', routes.status_host);
 
