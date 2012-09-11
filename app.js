@@ -40,5 +40,5 @@ app.get('/status/:host', routes.status_host);
  * Start http server.
  */
 http.createServer(app).listen(app.get('port'), function () {
-  console.log("Spawnfrag server listening on port " + app.get('port'));
+  console.log("Spawnfrag server listening on port " + app.get('port') + ' (in ' + app.settings.env + ' mode)');
 });
