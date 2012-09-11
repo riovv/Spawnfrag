@@ -52,7 +52,7 @@ $(function() {
       var levelshot = this.levelshot_template({ src: LEVELSHOT_BASE_URL + '/' + this.model.get('map') + '.jpg' });
 
       // Create a DOM-friendly id class out of the host
-      this.$el.addClass('server-id-' + this.model.get('id').replace('.', '_').replace(':', '_'));
+      this.$el.addClass('server-id-' + this.model.get('id').replace(/[\.]/g, '_').replace(/[\:]/g, '_'));
 
       // Render the whole view
       this.$el.html(this.template({
