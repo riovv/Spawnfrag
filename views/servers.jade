@@ -4,5 +4,7 @@ block content
   article(id='server-item-template', class='server-item span3 hide')
     div(class='server-item-inner')
       h2 {{ hostname }}
-      div.img-levelshot-holder
-        img(src='{{ img }}', class='img-polaroid img-levelshot')
+      div.levelshot-holder
+        {{ levelshot }}
+
+  div#server-list

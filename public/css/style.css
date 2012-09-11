@@ -159,11 +159,19 @@ body {
   font-weight: normal;
 }
 
-#server-list .img-levelshot-holder {
+#server-list .levelshot-holder {
   width: 258px;
   height: 196px;
+  background-color: #fff;
 }
 
 #server-list .img-levelshot {
   width: 248px;
 }
+
+/* ==========================================================================
+   Spawnfrag: Levelshots
+   ========================================================================== */
+/* TODO: THIS SHOULD BE A SPRITE? */
+
+
