@@ -5,7 +5,9 @@
 var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
-    path = require('path');
+    path = require('path'),
+    // Config
+    server_config = require('./servers.json');
 
 var app = express();
 
