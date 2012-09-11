@@ -46,6 +46,7 @@ $(function() {
     levelshot_template: _.template('<img src="{{ src }}" class="img-polaroid img-levelshot"/>'),
 
     initialize: function () {
+      _.bindAll(this, 'render');
     },
 
     render: function () {
@@ -57,14 +58,13 @@ $(function() {
       // Render the whole view
       this.$el.html(this.template({
         hostname: this.model.get('hostname'),
+        clients_status: this.model.get('clients_status'),
+        clients: this.model.get('clients'),
+        maxclients: this.model.get('maxclients'),
         levelshot: levelshot
       }));
 
       return this;
-    },
-
-    changeLevelshot: function () {
-      this.$el.find('img-levelshot').attr('src', LEVELSHOT_BASE_URL + '/' + this.model.get('map') + '.jpg');
     },
   });
 

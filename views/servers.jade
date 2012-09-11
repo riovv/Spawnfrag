@@ -4,7 +4,8 @@ block content
   article(id='server-item-template', class='server-item span3 hide')
     div(class='server-item-inner')
       h2 {{ hostname }}
-      div.levelshot-holder
+      div(class='img-block img-block-client-status-{{ clients_status }}')
+        span(class='clients') {{ clients }} / {{ maxclients }}
         {{ levelshot }}
 
-  div#server-list
+  div(id='server-list')

@@ -68,9 +68,13 @@ extendQuakeworldData = function (data) {
     return (p.frags !== 'S');
   });
 
-  // data.clients = number of clients connected
+  // data.clients = Number of clients connected
   data.clients = data.players.length;
 
+  // data.clients_status = empty|open|full depending on
+  // Number of clients connected and maxclients allowed
+  data.clients_status = (data.clients == 0) ? 'empty' : (data.clients < data.maxclients) ? 'open' : 'full';
+  
   // Override/Append properties from metadata
   for (key in metadata) {
     if (metadata.hasOwnProperty(key)) {

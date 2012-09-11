@@ -159,7 +159,8 @@ body {
   font-weight: normal;
 }
 
-#server-list .levelshot-holder {
+#server-list .img-block {
+  position: relative;
   width: 258px;
   height: 196px;
   background-color: #fff;
@@ -169,9 +170,15 @@ body {
   width: 248px;
 }
 
-/* ==========================================================================
-   Spawnfrag: Levelshots
-   ========================================================================== */
-/* TODO: THIS SHOULD BE A SPRITE? */
-
-
+#server-list span.clients {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  padding: 5px 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+#server-list .img-block-client-status-empty span.clients { background-color: rgba(220, 220, 220, 0.4); }
+#server-list .img-block-client-status-full span.clients { background-color: rgba(200, 0, 0, 0.4); }
+#server-list .img-block-client-status-open span.clients.open { background-color: rgba(0, 200, 0, 0.4); }
