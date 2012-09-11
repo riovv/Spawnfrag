@@ -28,7 +28,7 @@ exports.status = function (req, res) {
 
 /**
  * GET "/status/:host"
- * Get server statuse for a single server as JSON.
+ * Get server status for a single server as JSON.
  */
 exports.status_host = function (req, res) {
   var host = unescape(req.params.host);
