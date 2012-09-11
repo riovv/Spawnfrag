@@ -184,18 +184,19 @@ body {
 #server-list .img-block-client-status-full span.clients { background-color: rgba(200, 0, 0, 0.4); }
 #server-list .img-block-client-status-open span.clients { background-color: rgba(0, 200, 0, 0.4); }
 
-#btn-join {
+#btn-join,
+#btn-watch {
   display: inline;
   position: absolute;
   width: 158px;
+}
+
+#btn-join {
   top: 50px;
   left: 50px;
 }
 
 #btn-watch {
-  display: inline;
-  position: absolute;
-  width: 158px;
   top: 93px;
   left: 50px;
 }
