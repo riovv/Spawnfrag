@@ -4,8 +4,6 @@ $(function() {
       ServerView,
       ServerList,
       AddFavouriteView,
-      ServersPage,
-      FavouritesPage,
       LEVELSHOT_BASE_URL = 'http://qtv.quakeworld.nu/levelshots';
 
   // Mustasche-ish template syntax works smother with Jade
