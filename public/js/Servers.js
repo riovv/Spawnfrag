@@ -29,7 +29,7 @@ $(function() {
    */
   Servers = Backbone.Collection.extend({
     model: Server,
-    url: '/status'
+    url: '/statuses'
   });
 
   // Instance of Server Collection.

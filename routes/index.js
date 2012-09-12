@@ -26,13 +26,23 @@ exports.favourites = function (req, res) {
 };
 
 /**
- * GET "/status"
+ * GET "/statuses"
+ * Get server statuses for all servers for a user as JSON.
+ */
+exports.statuses = function (req, res) {
+  helpers.qw.statuses([], function (data) {
+    res.json(data);
+  });    
+};
+
+/**
+ * GET "/statuses/all"
  * Get server statuses for all servers in server config as JSON.
  */
-exports.status = function (req, res) {
+exports.statuses_all = function (req, res) {
   helpers.qw.statusesAll(function (data) {
     res.json(data);
-  });
+  });    
 };
 
 /**
