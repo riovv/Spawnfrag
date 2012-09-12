@@ -130,6 +130,10 @@ body {
 /* ==========================================================================
    Spawnfrag: Server styles
    ========================================================================== */
+#server-list .row {
+  margin-bottom: 20px;
+}
+
 #server-list .server-item-inner {
   min-height: 40px;
   padding: 10px;

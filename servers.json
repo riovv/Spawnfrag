@@ -1,7 +1,52 @@
 {
+  "pangela.se:28001" : {
+    "hostname": "Pangela #1",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
+    "location": "se"
+  },
   "pangela.se:28002" : {
     "hostname": "Pangela #2",
-    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=11",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=12",
+    "location": "se"
+  },
+  "pangela.se:28003" : {
+    "hostname": "Pangela #3",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=13",
+    "location": "se"
+  },
+  "pangela.se:28004" : {
+    "hostname": "Pangela #4",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=14",
+    "location": "se"
+  },
+  "pangela.se:28005" : {
+    "hostname": "Pangela #5",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=15",
+    "location": "se"
+  },
+  "pangela.se:28006" : {
+    "hostname": "Pangela #6",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=16",
+    "location": "se"
+  },
+  "pangela.se:28007" : {
+    "hostname": "Pangela #7",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=17",
+    "location": "se"
+  },
+  "pangela.se:28008" : {
+    "hostname": "Pangela #8",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=18",
+    "location": "se"
+  },
+  "pangela.se:28009" : {
+    "hostname": "Pangela #9",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=19",
+    "location": "se"
+  },
+  "pangela.se:28010" : {
+    "hostname": "Pangela #10",
+    "qtv": "http://quakeworld.fi:28000/watch.qtv?sid=20",
     "location": "se"
   },
   "troopers.fi:28001": {
