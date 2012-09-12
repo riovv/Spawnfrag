@@ -1,10 +1,10 @@
 $(function() {
-  var Server,
-      Servers,
-      ServerView,
-      ServerList,
-      AddFavouriteView,
-      LEVELSHOT_BASE_URL = 'http://qtv.quakeworld.nu/levelshots';
+  var Favourite,
+      Favourites,
+      FavouriteItem,
+      FavouriteList,
+      FavouriteAdd,
+      FavouriteApp;
 
   // Mustasche-ish template syntax works smother with Jade
   // Normal syntax for evaluate and escape
@@ -15,56 +15,50 @@ $(function() {
   };
 
   /**
-   * Model: Server
+   * Model: Favourite
    */
-  Server = Backbone.Model.extend({
+  Favourite = Backbone.Model.extend({
     url: function () { return escape('/status/' + this.id); }
   });
 
   /**
-   * Collection: Servers
+   * Collection: Favourites
+   * All favourites for a user.
    */
-  Servers = Backbone.Collection.extend({
-    model: Server,
+  Favourites = Backbone.Collection.extend({
+    model: Favourite,
     url: '/statuses'
   });
 
+  favourites = new Favourites();
+
   /**
-   * View: ServerView
-   * A single Server
+   * View: FavouriteItem
+   * A single favourite server in the favourite list.
    */
-  ServerItem = Backbone.View.extend({
+  FavouriteItem = Backbone.View.extend({
+    collection: favourites,
     tagName: 'article',
     className: 'server-item span3',
     template: _.template($('#server-item-template').html()),
-    levelshot_template: _.template('<img src="{{ src }}" class="img-polaroid img-levelshot"/>'),
+    levelshot_template: _.template('<img src="http://qtv.quakeworld.nu/levelshots/{{ map }}.jpg" class="img-polaroid img-levelshot"/>'),
 
     events: {
       'mouseenter': 'showButtons',
       'mouseleave': 'hideButtons',
-      'click .close': 'removeServer'
+      'click .close': 'removeItem'
     },
 
     initialize: function () {
-      _.bindAll(this, 'render', 'showButtons', 'hideButtons', 'remove');
+      _.bindAll(this, 'render', 'showButtons', 'hideButtons');
+      // Create a DOM-friendly id class out of the host
+      this.$el.addClass('server-id-' + this.model.get('id').replace(/[\.]/g, '_').replace(/[\:]/g, '_'));
     },
 
     render: function () {
-      var levelshot = this.levelshot_template({ src: LEVELSHOT_BASE_URL + '/' + this.model.get('map') + '.jpg' });
-
-      // Create a DOM-friendly id class out of the host
-      this.$el.addClass('server-id-' + this.model.get('id').replace(/[\.]/g, '_').replace(/[\:]/g, '_'));
-
+      this.model.set('levelshot', this.levelshot_template({ map: this.model.get('map') }));
       // Render the whole view
-      this.$el.html(this.template({
-        hostname: this.model.get('hostname'),
-        id: this.model.get('id'),
-        qtv: this.model.get('qtv'),
-        clients_status: this.model.get('clients_status'),
-        clients: this.model.get('clients'),
-        maxclients: this.model.get('maxclients'),
-        levelshot: levelshot
-      }));
+      this.$el.html(this.template(this.model.attributes));
 
       return this;
     },
@@ -80,53 +74,62 @@ $(function() {
       return this;
     },
 
-    removeServer: function () {
-      if (confirm('Are your sure you want to remove this server?')) {
-        // Remove DOM-element
-        this.$el.fadeOut(200, this.remove);
-        Spawnfrag.FavouritesPage.remove(this.model);
-      }
+    removeItem: function (e) {
+      var self = this;
+      e.preventDefault();
 
+      this.$el.fadeOut(200, function () {
+        self.remove();
+        self.collection.remove(self.model); 
+        //self.model.destroy()
+      });
+      
       return this;
-    }
+    }    
   });
 
   /**
-   * View: ServerList
-   * A list (collection) of Servers
+   * View: FavouriteList
+   * A list (collection) of favourite servers.
    */
-  ServerList = Backbone.View.extend({
+  FavouriteList = Backbone.View.extend({
+    collection: favourites,
     el: $('#server-list'),
 
     initialize: function () {
       _.bindAll(this, 'render', 'addServer');
       this.collection.on('reset', this.render);
+      this.collection.on('add', this.addServer);
+      this.collection.on('remove', this.removeServer);
     },
 
-    // TODO: Don't count on children being available
-    // Since that only happens when called from reset event.
-    render: function (children) {
+    render: function () {
       var self = this;
 
       // Reset view
       this.$el.html('');
 
-      children.each(function (child) {
-        self.addServer(child);
+      this.collection.models.forEach(function (model) {
+        self.addServer(model);
       });
 
       return this;
     },
 
-    addServer: function (server) {
+    addServer: function (model) {
       var lastRow = this.$el.children('div.row:last'),
           nItems = $(lastRow).children('.server-item').length,
           row = (nItems > 0 && nItems < 4) ? lastRow : $('<div class="row"></div>').appendTo(this.$el);
 
-      row.append(new ServerItem({ model: server }).render().el);
+      row.append(new FavouriteItem({ model: model }).render().el);
+
+      return this;
+    },
+
+    removeServer: function (model, options) {
+      // Should resort etc.
     }
   });
-
 
   /**
    * View: AddFavourite
@@ -135,6 +138,7 @@ $(function() {
    */
    // TODO: Basically this whole view has to be refactored later, prototype now.
   AddFavourite = Backbone.View.extend({
+    collection: favourites,
     el: $('#favourite-add'),
 
     events: {
@@ -162,7 +166,8 @@ $(function() {
     },
 
     addServer: function (e) {
-      var self = this,
+      var model,
+          self = this,
           $address = this.$el.find('input[name=address]'),
           $port = this.$el.find('input[name=port]'),
           address = $address.val(),
@@ -185,9 +190,8 @@ $(function() {
           $port.val('');
           // Hide modal again.
           self.$el.children('#modal-favourite-add').modal('hide');
-          // Add to list view
-          self.page.serverList.addServer(model);
-        }
+        },
+        wait: true
       });
 
       return this;
@@ -195,44 +199,20 @@ $(function() {
   });
 
   /**
-   * View: ServersPage
+   * View: FavouriteApp
+   * 
+   * Glues favourites together
    */
-  ServersPage = Backbone.View.extend({
-    initialize: function () {
-      // Server collection
-      this.servers = new Servers();
-      this.servers.url = '/statuses/all';
-      this.servers.fetch();
+  FavouriteApp = Backbone.View.extend({
+    initialize: function() {
+      this.favouriteList = new FavouriteList();
+      this.addFavourite = new AddFavourite();
+      this.favourites = favourites;
 
-      // Server list view
-      this.serverList = new ServerList({ collection: this.servers });
+      this.favourites.fetch();
     }
   });
 
-  /**
-   * View: FavouritesPage
-   */
-  FavouritesPage = Backbone.View.extend({
-    initialize: function () {
-      // Server collection
-      this.servers = new Servers();
-      this.servers.url = '/statuses';
-      this.servers.fetch();
-
-      // Server list view
-      this.serverList = new ServerList({ collection: this.servers });
-
-      // Add favourite view
-      this.addFavourite = new AddFavourite({ collection: this.servers, page: this });
-    }
-  });
-
-  // TODO: Maybe this isn't the best thing. Get back to this
-  // implementation later.
-  if (!window.Spawnfrag) {
-    window.Spawnfrag = {};
-  }
-
-  //window.Spawnfrag.ServersPage = new ServersPage();
-  window.Spawnfrag.FavouritesPage = new FavouritesPage();
+  if (!window.Spawnfrag) window.Spawnfrag = {};
+  window.Spawnfrag.FavouriteApp = new FavouriteApp();
 });
