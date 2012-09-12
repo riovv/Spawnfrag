@@ -18,6 +18,14 @@ exports.servers = function (req, res) {
 };
 
 /**
+ * GET "/favourites"
+ * A server list of user selected servers.
+ */
+exports.favourites = function (req, res) {
+  res.render('favourites', { title: helpers.pkg.name });
+};
+
+/**
  * GET "/status"
  * Get server statuses for all servers in server config as JSON.
  */

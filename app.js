@@ -33,6 +33,7 @@ app.configure('development', function () {
  */
 app.get('/', routes.index);
 app.get(/\/servers?$/, routes.servers);
+app.get('/favourites', routes.favourites);
 app.get('/status', routes.status);
 app.get('/status/:host', routes.status_host);
 
