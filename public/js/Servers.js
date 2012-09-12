@@ -3,9 +3,9 @@ $(function() {
       Servers,
       ServerView,
       ServerList,
-      ServersPageView,
       AddFavouriteView,
-      serverCollection,
+      ServersPage,
+      FavouritesPage,
       LEVELSHOT_BASE_URL = 'http://qtv.quakeworld.nu/levelshots';
 
   // Mustasche-ish template syntax works smother with Jade
@@ -43,11 +43,12 @@ $(function() {
 
     events: {
       'mouseenter': 'showButtons',
-      'mouseleave': 'hideButtons'
+      'mouseleave': 'hideButtons',
+      'click .close': 'removeServer'
     },
 
     initialize: function () {
-      _.bindAll(this, 'render', 'showButtons', 'hideButtons');
+      _.bindAll(this, 'render', 'showButtons', 'hideButtons', 'remove');
     },
 
     render: function () {
@@ -75,8 +76,19 @@ $(function() {
       this.$el.find('.img-block-buttons').fadeIn(200);
       return this;
     },
+
     hideButtons: function () {
       this.$el.find('.img-block-buttons').fadeOut(0);
+      return this;
+    },
+
+    removeServer: function () {
+      if (confirm('Are your sure you want to remove this server?')) {
+        // Remove DOM-element
+        this.remove();
+        Spawnfrag.FavouritesPage.remove(this.model);
+      }
+
       return this;
     }
   });
@@ -135,6 +147,7 @@ $(function() {
 
     initialize: function () {
       _.bindAll(this, 'addServer', 'showModal', 'hideModal');
+      this.page = this.options.page;
     },
 
     // Event listeners
@@ -175,7 +188,7 @@ $(function() {
           // Hide modal again.
           self.$el.children('#modal-favourite-add').modal('hide');
           // Add to list view
-          pageView.serverList.addServer(model);
+          self.page.serverList.addServer(model);
         }
       });
 
@@ -212,7 +225,7 @@ $(function() {
       this.serverList = new ServerList({ collection: this.servers });
 
       // Add favourite view
-      this.addFavourite = new AddFavourite({ collection: this.servers });
+      this.addFavourite = new AddFavourite({ collection: this.servers, page: this });
     }
   });
 
@@ -222,6 +235,6 @@ $(function() {
     window.Spawnfrag = {};
   }
 
-  window.Spawnfrag.ServersPage = ServersPage;
-  window.Spawnfrag.FavouritesPage = FavouritesPage;
+  //window.Spawnfrag.ServersPage = new ServersPage();
+  window.Spawnfrag.FavouritesPage = new FavouritesPage();
 });
