@@ -2,7 +2,7 @@ extends layout
 
 block content
   article(id='server-item-template', class='server-item span3 hide')
-    div(class='server-item-inner')
+    div(class='server-item-inner well well-small')
       h2 {{ hostname }}
       div(class='img-block img-block-client-status-{{ clients_status }}')
         div(class='img-block-buttons', style='display: none')
