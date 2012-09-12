@@ -90,8 +90,10 @@ extendQuakeworldData = function (data) {
  */
 qw.status = function (host, callback) {
   quakeworld(qw.address(host), qw.port(host), 'status', qw.statusArgs, function (err, data) {
-    if (err) return callback({id: host, err: err });
+    if (err) return callback({id: host, error: err });
 
+    // No error
+    data.error = null;
     // Set the id of this server, equals to host.
     data.id = host;
     // Extend data object with additional information.
