@@ -114,6 +114,8 @@ qw.statuses = function (hosts, callback) {
       n = hosts.length,
       statuses = [];
 
+  if (hosts.length === 0) callback(statuses);
+
   for (i = 0; i < n; i++) {
     qw.status(hosts[i], function (err, data) {
       statuses.push((err) ? err : data);

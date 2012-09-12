@@ -180,3 +180,23 @@ body {
   top: 93px;
   left: 51px;
 }
+
+/* ==========================================================================
+   Spawnfrag: Add favourite
+   ========================================================================== */
+#btn-favourite-add {
+  display: block;
+  width: 300px;
+  margin: 0 auto 20px auto;
+}
+#modal-favourite-add form {
+  margin: 0;
+}
+
+#modal-favourite-add form input {
+  width: 243px;
+  height: 30px;
+}
+#modal-favourite-add form span {
+  width: 20px;
+}
