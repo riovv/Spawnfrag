@@ -85,7 +85,7 @@ $(function() {
     removeServer: function () {
       if (confirm('Are your sure you want to remove this server?')) {
         // Remove DOM-element
-        this.remove();
+        this.$el.fadeOut(200, this.remove);
         Spawnfrag.FavouritesPage.remove(this.model);
       }
 
