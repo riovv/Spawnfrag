@@ -47,7 +47,7 @@ $(function() {
     },
 
     initialize: function () {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'showButtons', 'hideButtons');
     },
 
     render: function () {
@@ -73,9 +73,11 @@ $(function() {
     // Event listeners
     showButtons: function () {
       this.$el.find('.img-block-buttons').fadeIn(200);
+      return this;
     },
     hideButtons: function () {
       this.$el.find('.img-block-buttons').fadeOut(0);
+      return this;
     }
   });
 
