@@ -41,7 +41,8 @@ $(function() {
     tagName: 'article',
     className: 'server-item span3',
     template: _.template($('#server-item-template').html()),
-    levelshot_template: _.template('<img src="http://qtv.quakeworld.nu/levelshots/{{ map }}.jpg" class="img-polaroid img-levelshot"/>'),
+    template_levelshot: _.template('<img src="http://qtv.quakeworld.nu/levelshots/{{ map }}.jpg" class="img-polaroid img-levelshot"/>'),
+    template_players: _.template('<table class="table table-bordered"><thead><th>Frags</th><th>Team</th><th>Name</th><thead><tbody><% _.each(players, function(p) { %><tr><td>{{ p.frags }}</td><td>{{ p.team }}</td><td>{{ p.name }}</td><% }); %></table>'),
 
     events: {
       'mouseenter': 'showButtons',
@@ -50,17 +51,37 @@ $(function() {
     },
 
     initialize: function () {
-      _.bindAll(this, 'render', 'showButtons', 'hideButtons');
+      _.bindAll(this, 'render', 'popoverPlacement', 'showButtons', 'hideButtons');
       // Create a DOM-friendly id class out of the host
       this.$el.addClass('server-id-' + this.model.get('id').replace(/[\.]/g, '_').replace(/[\:]/g, '_'));
     },
 
     render: function () {
-      this.model.set('levelshot', this.levelshot_template({ map: this.model.get('map') }));
+      // TODO: Player HTML needs to be handled better.
+      var playerTable; 
+
+      // TODO: Find a better way, I dont like the whole img element here.
+      this.model.set('levelshot', this.template_levelshot({ map: this.model.get('map') }));
       // Render the whole view
       this.$el.html(this.template(this.model.attributes));
 
+      // Setup popover (if there are any players connected)
+      if (this.model.get('clients') > 0) {
+        playerTable = this.template_players({ players: this.model.get('players') });
+        this.$el.find('.server-item-inner').popover({
+          trigger: 'hover',
+          placement: this.popoverPlacement,
+          title: 'Players',
+          content: playerTable,
+          delay: { show: 500, hide: 50 }
+        });       
+      }
+
       return this;
+    },
+
+    popoverPlacement: function () {
+      return (this.$el.is(':nth-child(4)')) ? 'left' : 'right';
     },
 
     // Event listeners

@@ -138,6 +138,9 @@ body {
   line-height: 30px;
   font-weight: normal;
 }
+#server-list .well:hover {
+  background-color: #e9e9e9;  
+}
 
 #server-list .img-block {
   position: relative;
