@@ -2,8 +2,14 @@ extends layout
 
 block append head
   script(type='text/javascript', src='js/Servers.js')
-  
+  script(type='text/javascript')
+    $(function () {
+      pageView = new Spawnfrag.FavouritesPage();
+    });
+
 block content
+  include includes/add_favourite
+
   article(id='server-item-template', class='server-item span3 hide')
     div(class='server-item-inner well well-small')
       h2 {{ hostname }}

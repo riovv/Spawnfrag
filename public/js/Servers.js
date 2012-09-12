@@ -4,6 +4,7 @@ $(function() {
       ServerView,
       ServerList,
       ServersPageView,
+      AddFavouriteView,
       serverCollection,
       LEVELSHOT_BASE_URL = 'http://qtv.quakeworld.nu/levelshots';
 
@@ -19,8 +20,6 @@ $(function() {
    * Model: Server
    */
   Server = Backbone.Model.extend({
-    Collection: serverCollection,
-
     url: function () { return escape('/status/' + this.id); }
   });
 
@@ -31,9 +30,6 @@ $(function() {
     model: Server,
     url: '/statuses'
   });
-
-  // Instance of Server Collection.
-  serverCollection = new Servers();
 
   /**
    * View: ServerView
@@ -74,6 +70,7 @@ $(function() {
       return this;
     },
 
+    // Event listeners
     showButtons: function () {
       this.$el.find('.img-block-buttons').fadeIn(200);
     },
@@ -87,17 +84,20 @@ $(function() {
    * A list (collection) of Servers
    */
   ServerList = Backbone.View.extend({
-    Collection: serverCollection,
     el: $('#server-list'),
 
     initialize: function () {
-      _.bindAll(this, 'render');
-      this.Collection.on('reset', this.render);
-      this.Collection.fetch();
+      _.bindAll(this, 'render', 'addServer');
+      this.collection.on('reset', this.render);
     },
 
+    // TODO: Don't count on children being available
+    // Since that only happens when called from reset event.
     render: function (children) {
       var self = this;
+
+      // Reset view
+      this.$el.html('');
 
       children.each(function (child) {
         self.addServer(child);
@@ -115,16 +115,111 @@ $(function() {
     }
   });
 
+
   /**
-   * View: ServersPageView
+   * View: AddFavourite
+   * 
+   * Handles the add favourite form
    */
-  ServersPageView = Backbone.View.extend({
+   // TODO: Basically this whole view has to be refactored later, prototype now.
+  AddFavourite = Backbone.View.extend({
+    el: $('#favourite-add'),
+
+    events: {
+      'click #btn-favourite-add': 'showModal',
+      'click #btn-modal-favourite-close, .close': 'hideModal',
+      'submit form': 'addServer'
+    },
+
     initialize: function () {
-      this.serverList = new ServerList();
+      _.bindAll(this, 'addServer', 'showModal', 'hideModal');
+    },
+
+    // Event listeners
+    showModal: function (e) {
+      e.preventDefault();
+      this.$el.children('#modal-favourite-add').modal('show');
+      return this;
+    },
+
+    hideModal: function (e) {
+      e.preventDefault();
+      this.$el.children('#modal-favourite-add').modal('hide');
+      return this;
+    },
+
+    addServer: function (e) {
+      var self = this,
+          $address = this.$el.find('input[name=address]'),
+          $port = this.$el.find('input[name=port]'),
+          address = $address.val(),
+          port = parseInt($port.val(), 10);
+
+      e.preventDefault();
+
+      // TODO: Alot better validation, and also some nice error messages
+      // and other candy stuff. Should even do a test so check that it is an qw server.
+      // Check if server already is favourites.
+      if (address === '' || isNaN(port)) {
+        return this;
+      }
+
+      // Add server to collection and list view.
+      self.collection.create({ id: address + ':' + port }, {
+        success: function (model) {
+          // Reset form elements
+          $address.val('');
+          $port.val('');
+          // Hide modal again.
+          self.$el.children('#modal-favourite-add').modal('hide');
+          // Add to list view
+          pageView.serverList.addServer(model);
+        }
+      });
+
+      return this;
     }
   });
 
-  // Expost collection and page view to the global scope.
-  window.serverCollection = serverCollection;
-  window.pageView = new ServersPageView();
+  /**
+   * View: ServersPage
+   */
+  ServersPage = Backbone.View.extend({
+    initialize: function () {
+      // Server collection
+      this.servers = new Servers();
+      this.servers.url = '/statuses/all';
+      this.servers.fetch();
+
+      // Server list view
+      this.serverList = new ServerList({ collection: this.servers });
+    }
+  });
+
+  /**
+   * View: FavouritesPage
+   */
+  FavouritesPage = Backbone.View.extend({
+    initialize: function () {
+      // Server collection
+      this.servers = new Servers();
+      this.servers.url = '/statuses';
+      this.servers.fetch();
+
+      // Server list view
+      this.serverList = new ServerList({ collection: this.servers });
+
+      // Add favourite view
+      this.addFavourite = new AddFavourite({ collection: this.servers });
+    }
+  });
+
+  // TODO: Maybe this isn't the best thing. Get back to this
+  // implementation later.
+  if (!window.Spawnfrag) {
+    window.Spawnfrag = {};
+  }
+
+  window.Spawnfrag.ServersPage = ServersPage;
+  window.Spawnfrag.FavouritesPage = FavouritesPage;
 });

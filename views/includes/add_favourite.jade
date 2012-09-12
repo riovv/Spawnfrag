@@ -1,0 +1,15 @@
+div(id='favourite-add')
+  a(id='btn-favourite-add', href='#modal-favourite-add', role='button', class='btn btn-large btn-primary')<i class="icon-heart icon-white"></i> Add favourite
+
+  div(id='modal-favourite-add', class='modal fade hide', role="dialog")
+    div(class='modal-header')
+      button(type='button', class='close', aria-hidden='true') &times;
+      h3 Add favourite
+    form(class='form-inline', action='#')
+      div(class='modal-body')
+          input(name='address', type='text', class='input-large', placeholder='example.com')
+          span  : 
+          input(name='port', type='text', class='input-large', placeholder='27500')
+      div(class='modal-footer')
+        a(id='btn-modal-favourite-close', href='#', class='btn', aria-hidden='true') Cancel
+        button(id='btn-modal-favourite-add', type='submit', class='btn btn-primary') Add server
