@@ -27,7 +27,11 @@ $(function() {
    */
   Favourites = Backbone.Collection.extend({
     model: Favourite,
-    url: '/statuses'
+    url: '/statuses',
+
+    comparator: function (model) {
+      return model.get('maxclients') - model.get('clients');
+    },
   });
 
   favourites = new Favourites();
@@ -52,6 +56,9 @@ $(function() {
 
     initialize: function () {
       _.bindAll(this, 'render', 'popoverPlacement', 'showButtons', 'hideButtons');
+      // Rerender on update
+      // TODO: Do this more nicely. Only rerender what has changed etc.
+      this.model.on('change', this.render);
       // Create a DOM-friendly id class out of the host
       this.$el.addClass('server-id-' + this.model.get('id').replace(/[\.]/g, '_').replace(/[\:]/g, '_'));
     },
@@ -59,7 +66,6 @@ $(function() {
     render: function () {
       // TODO: Player HTML needs to be handled better.
       var playerTable; 
-
       // TODO: Find a better way, I dont like the whole img element here.
       this.model.set('levelshot', this.template_levelshot({ map: this.model.get('map') }));
       // Render the whole view
@@ -119,9 +125,10 @@ $(function() {
 
     initialize: function () {
       _.bindAll(this, 'render', 'addServer');
+      // TODO: This could be done more nicely?
       this.collection.on('reset', this.render);
-      this.collection.on('add', this.addServer);
-      this.collection.on('remove', this.removeServer);
+      this.collection.on('add', this.render);
+      this.collection.on('remove', this.render);
     },
 
     render: function () {

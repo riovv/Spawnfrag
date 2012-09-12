@@ -30,6 +30,7 @@ exports.favourites = function (req, res) {
  * Get server statuses for all servers for a user as JSON.
  */
 exports.statuses = function (req, res) {
+  res.redirect('/statuses/all'); // Temporary
   helpers.qw.statuses([], function (data) {
     res.json(data);
   });    
